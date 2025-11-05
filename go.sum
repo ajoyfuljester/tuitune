@@ -1,0 +1,8 @@
+github.com/go-resty/resty/v2 v2.16.5 h1:hBKqmWrr7uRc3euHVqmh1HTHcKn99Smr7o5spptdhTM=
+github.com/go-resty/resty/v2 v2.16.5/go.mod h1:hkJtXbA2iKHzJheXYvQ8snQES5ZLGKMwQ07xAwp/fiA=
+go.uploadedlobster.com/mbtypes v0.4.0 h1:D5asCgHsRWufj4Yn5u0IuH2J9z1UuYImYkYIp1Z1Q7s=
+go.uploadedlobster.com/mbtypes v0.4.0/go.mod h1:Bu1K1Hl77QTAE2Z7QKiW/JAp9KqYWQebkRRfG02dlZM=
+go.uploadedlobster.com/musicbrainzws2 v0.17.0 h1:9aKki5+cZORQ/A4rD3pV1sUbH4SxUGs7Ccg2IzLlN9Y=
+go.uploadedlobster.com/musicbrainzws2 v0.17.0/go.mod h1:FwN/bA0FHrYZTRhGE9jMHnBqS4pZh67LBEBKLHeWgqk=
+golang.org/x/net v0.43.0 h1:lat02VYK2j4aLzMzecihNvTlJNQUq316m2Mr9rnM6YE=
+golang.org/x/net v0.43.0/go.mod h1:vhO1fvI4dGsIjh73sWfUVjj3N7CA9WkKJNQm2svM6Jg=
