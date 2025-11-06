@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"flag"
 	"fmt"
 	"strings"
@@ -41,6 +42,23 @@ func search(query string) {
 
 
 	client := mb.NewClient(appInfo)
+	defer client.Close()
+
+	ctx := context.Background()
+
+	searchFilter := mb.SearchFilter{
+		Query: query,
+	}
+
+	paginator := mb.Paginator{
+		Limit: 12,
+	}
+
+	res, err := client.SearchWorks(ctx, searchFilter, paginator)
+	if err != nil {
+		panic(err)
+	}
+
 
 
 }
