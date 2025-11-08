@@ -13,7 +13,7 @@ import (
 
 
 var cmdSearch = cobra.Command{
-	Use: "search [-a artist] title",
+	Use: "search [-a artist] [-e] title",
 	Short: "Searches musicbrainz.org for data about recordings",
 	Long: "TODO",
 	Aliases: []string{"s"},
@@ -22,17 +22,21 @@ var cmdSearch = cobra.Command{
 func init() {
 	var pArtist string
 	var pLimit int
+	var pExact bool
 
 	cmdSearch.Run = func(cmd *cobra.Command, args []string) {
 		search(SearchParams{
 			title: strings.Join(args, " "),
 			artist: pArtist,
-		}, pLimit)
+		}, pLimit, pExact)
 	}
 
 
 	cmdSearch.Flags().StringVarP(&pArtist, "artist", "a", "", "artist name that is credited in the recording")
 	cmdSearch.Flags().IntVarP(&pLimit, "limit", "l", 12, "maximum number of results that will be showed, 25 is probably maximum")
+	// i think it works word by word
+	// TODO: write this in long help
+	cmdSearch.Flags().BoolVarP(&pExact, "exact", "e", false, "should the search by title try to be an exact match")
 }
 
 type SearchParams struct {
@@ -40,9 +44,12 @@ type SearchParams struct {
 	title string;
 }
 
-func search(params SearchParams, limit int) {
+func search(params SearchParams, limit int, isExact bool) {
 
 	query := params.title
+	if !isExact {
+		query += "~"
+	}
 
 	if params.artist != "" {
 		query += fmt.Sprintf(" AND artist:\"%s\"", params.artist)
