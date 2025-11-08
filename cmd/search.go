@@ -11,41 +11,38 @@ import (
 	"tuitune/config"
 )
 
-var pArtist string
-var pTitle string
 
 var cmdSearch = cobra.Command{
-	Use: "search [-a artist] [-t title] the rest of the query",
+	Use: "search [-a artist] title",
 	Short: "Searches musicbrainz.org for data about recordings",
 	Long: "TODO",
 	Aliases: []string{"s"},
-	Run: func(cmd *cobra.Command, args []string) {
-		search(SearchParams{
-			query: strings.Join(args, " "),
-			artist: pArtist,
-			title: pTitle,
-		})
-	},
 }
 
 func init() {
+	var pArtist string
+	var pLimit int
+
+	cmdSearch.Run = func(cmd *cobra.Command, args []string) {
+		search(SearchParams{
+			title: strings.Join(args, " "),
+			artist: pArtist,
+		}, pLimit)
+	}
+
+
 	cmdSearch.Flags().StringVarP(&pArtist, "artist", "a", "", "artist name that is credited in the recording")
-	cmdSearch.Flags().StringVarP(&pTitle, "title", "t", "", "title of the recording")
+	cmdSearch.Flags().IntVarP(&pLimit, "limit", "l", 12, "maximum number of results that will be showed, 25 is probably maximum")
 }
 
 type SearchParams struct {
-	query string;
 	artist string;
 	title string;
 }
 
-func search(params SearchParams) {
+func search(params SearchParams, limit int) {
 
-	query := params.query
-
-	if params.title != "" {
-		query += fmt.Sprintf(" AND recording:\"%s\"", params.title)
-	}
+	query := params.title
 
 	if params.artist != "" {
 		query += fmt.Sprintf(" AND artist:\"%s\"", params.artist)
@@ -68,7 +65,7 @@ func search(params SearchParams) {
 
 
 	paginator := mb.Paginator{
-		Limit: 25,
+		Limit: limit,
 	}
 
 	res, err := client.SearchRecordings(ctx, searchFilter, paginator)
