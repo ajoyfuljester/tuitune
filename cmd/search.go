@@ -21,7 +21,7 @@ var cmdSearch = cobra.Command{
 
 func init() {
 	var pArtist string
-	var pLimit int
+	var pLimit uint
 	var pExact bool
 
 	cmdSearch.Run = func(cmd *cobra.Command, args []string) {
@@ -33,7 +33,7 @@ func init() {
 
 
 	cmdSearch.Flags().StringVarP(&pArtist, "artist", "a", "", "artist name that is credited in the recording")
-	cmdSearch.Flags().IntVarP(&pLimit, "limit", "l", 12, "maximum number of results that will be showed, 25 is probably maximum")
+	cmdSearch.Flags().UintVarP(&pLimit, "limit", "l", 12, "maximum number of results that will be showed, 25 is probably maximum")
 	// i think it works word by word
 	// TODO: write this in long help
 	cmdSearch.Flags().BoolVarP(&pExact, "exact", "e", false, "should the search by title try to be an exact match")
@@ -44,7 +44,7 @@ type SearchParams struct {
 	title string;
 }
 
-func search(params SearchParams, limit int, isExact bool) {
+func search(params SearchParams, limit uint, isExact bool) {
 
 	query := params.title
 	if !isExact {
@@ -72,7 +72,7 @@ func search(params SearchParams, limit int, isExact bool) {
 
 
 	paginator := mb.Paginator{
-		Limit: limit,
+		Limit: int(limit),
 	}
 
 	res, err := client.SearchRecordings(ctx, searchFilter, paginator)
