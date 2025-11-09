@@ -52,7 +52,7 @@ func search(params SearchParams, limit uint, isExact bool) {
 	}
 
 	if params.artist != "" {
-		query += fmt.Sprintf(" AND artist:\"%s\"", params.artist)
+		query += fmt.Sprintf(" AND artist:%s", params.artist)
 	}
 
 
