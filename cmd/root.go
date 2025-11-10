@@ -6,10 +6,10 @@ import (
 
 
 var rootCmd = cobra.Command{
-	Use: "main",
+	Use: "tuitune",
 }
 
 func Execute() {
-	rootCmd.AddCommand(&cmdSearch)
+	rootCmd.AddCommand(&cmdData)
 	rootCmd.Execute()
 }

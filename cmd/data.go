@@ -12,8 +12,8 @@ import (
 )
 
 
-var cmdSearch = cobra.Command{
-	Use: "search [-a artist] [-e] title",
+var cmdData = cobra.Command{
+	Use: "data [-a artist] [-e] title",
 	Short: "Searches musicbrainz.org for data about recordings",
 	Long: "TODO",
 	Aliases: []string{"s"},
@@ -24,19 +24,19 @@ func init() {
 	var pLimit uint
 	var pExact bool
 
-	cmdSearch.Run = func(cmd *cobra.Command, args []string) {
-		search(SearchParams{
+	cmdData.Run = func(cmd *cobra.Command, args []string) {
+		getData(SearchParams{
 			title: strings.Join(args, " "),
 			artist: pArtist,
 		}, pLimit, pExact)
 	}
 
 
-	cmdSearch.Flags().StringVarP(&pArtist, "artist", "a", "", "artist name that is credited in the recording")
-	cmdSearch.Flags().UintVarP(&pLimit, "limit", "l", 12, "maximum number of results that will be showed, 25 is probably maximum")
+	cmdData.Flags().StringVarP(&pArtist, "artist", "a", "", "artist name that is credited in the recording")
+	cmdData.Flags().UintVarP(&pLimit, "limit", "l", 12, "maximum number of results that will be showed, 25 is probably maximum")
 	// i think it works word by word
 	// TODO: write this in long help
-	cmdSearch.Flags().BoolVarP(&pExact, "exact", "e", false, "should the search by title try to be an exact match")
+	cmdData.Flags().BoolVarP(&pExact, "exact", "e", false, "should the search by title try to be an exact match")
 }
 
 type SearchParams struct {
@@ -44,10 +44,10 @@ type SearchParams struct {
 	title string;
 }
 
-func search(params SearchParams, limit uint, isExact bool) {
+func getData(params SearchParams, limit uint, isExact bool) {
 
 	query := params.title
-	if !isExact {
+	if !isExact && query != "" {
 		query += "~"
 	}
 
