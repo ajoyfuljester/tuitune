@@ -10,6 +10,6 @@ var rootCmd = cobra.Command{
 }
 
 func Execute() {
-	rootCmd.AddCommand(&cmdData)
+	rootCmd.AddCommand(&cmdData, &cmdGet)
 	rootCmd.Execute()
 }
